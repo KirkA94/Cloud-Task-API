@@ -1,38 +1,40 @@
 package com.kirkaustin.cloudtaskapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import jakarta.persistence.*;
+import lombok.*;
 import java.time.LocalDateTime;
 
 
+
+//entity tells jpa "this class becomes a database table"
 @Entity
+//sets table name explicitly (clean & predictable)
+@Table(name = "tasks")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Task {
 
-    //this map directly to my databases.... im learning !!!!
+    // PRIMARY KEY (required by JPA)
+    @Id
+    //creates a generated id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // ID of Task
-    private long id;
+    private Long id;
 
-    // title of the task
+    // Task title should not be null in the database
+    @Column(nullable = false)
     private String title;
 
-    // what the task is
+    // Optional longer text
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    // is the task completed yes or no
+    // Defaults to false if not set
+    @Column(nullable = false)
     private boolean completed;
 
-    //date and time task was created
+    // When the task was created
     private LocalDateTime createdAt;
-
 }
