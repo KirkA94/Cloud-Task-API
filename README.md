@@ -1,56 +1,41 @@
 # Cloud Task API
 
-> 🚧 Project currently in active development.
+## Overview
+Cloud Task API is a backend application built using Spring Boot that allows users to manage tasks through RESTful APIs. This project focuses on backend architecture, database integration, and API design.
 
-Cloud Task API is a RESTful task management backend built with Spring Boot and Java.  
-This project demonstrates clean backend architecture using a layered design pattern and RESTful principles.
-
-The goal of this project is to strengthen backend engineering fundamentals and prepare for production-style application development.
-
----
-
-## 🚀 Tech Stack
-
-- Java 17
+## Tech Stack
+- Java
 - Spring Boot
-- Spring Web
-- Spring Data JPA
+- PostgreSQL
 - Maven
-- Lombok
-- (Database integration configurable)
+- REST APIs
 
----
+## Features
+- Create, update, and delete tasks
+- RESTful API endpoints for task management
+- Integration with PostgreSQL database
+- Structured backend architecture
 
-## 🏗 Architecture
+## What I Learned
+- Building backend systems using Spring Boot
+- Designing and implementing RESTful APIs
+- Connecting applications to PostgreSQL databases
+- Debugging database connection and authentication issues
+- Structuring scalable backend applications
 
-This project follows a layered architecture pattern:
-src/main/java/com/kirkaustin/cloudtaskapi
-│
-├── controller # REST controllers (API endpoints)
-├── service # Business logic layer
-├── repository # Data access layer
-├── model # Domain models (JPA entities)
-└── CloudTaskApiApplication.java
+## Challenges
+- Resolving database authentication errors
+- Configuring PostgreSQL locally
+- Managing environment variables for database connections
 
+## How to Run
+1. Clone the repository  
+2. Set up PostgreSQL and create a database  
+3. Configure application properties with your database credentials  
+4. Run the Spring Boot application  
+5. Test endpoints using Postman  
 
-### Layer Responsibilities
-
-- **Controller** → Handles HTTP requests & responses  
-- **Service** → Contains business logic  
-- **Repository** → Handles database interaction  
-- **Model** → Represents application domain objects  
-
-This structure mirrors production-style backend systems.
-
----
-
-## 📌 Current Features
-
-- Create a task
-- Retrieve all tasks
-- Retrieve a task by ID
-- RESTful endpoint structure
-- Constructor-based dependency injection
-- Clean separation of concerns
-
----
+## Future Improvements
+- Add authentication (JWT)
+- Deploy to cloud platform
+- Build frontend interface
