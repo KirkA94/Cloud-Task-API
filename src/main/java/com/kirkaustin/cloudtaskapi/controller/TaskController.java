@@ -5,6 +5,7 @@ import com.kirkaustin.cloudtaskapi.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task task) {
+    public ResponseEntity<Task> create(@Valid @RequestBody Task task) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.createTask(task));
     }
@@ -33,5 +34,15 @@ public class TaskController {
     public Task getOne(@PathVariable Long id) {
         return service.getTask(id);
     }
+
+    @PutMapping("/{id}")
+public Task update(@PathVariable Long id, @Valid @RequestBody Task task) {
+    return service.updateTask(id, task);
+}
+
+@DeleteMapping("/{id}")
+public void delete(@PathVariable Long id) {
+    service.deleteTask(id);
+}
 
 }

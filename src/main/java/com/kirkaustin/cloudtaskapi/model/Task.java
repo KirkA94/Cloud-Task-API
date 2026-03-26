@@ -3,6 +3,7 @@ package com.kirkaustin.cloudtaskapi.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import jakarta.validation.constraints.NotBlank;
 
 
 
@@ -24,10 +25,12 @@ public class Task {
     private Long id;
 
     // Task title should not be null in the database
+    @NotBlank(message = "Title is required")
     @Column(nullable = false)
     private String title;
 
     // Optional longer text
+    @NotBlank(message = "Description is required")
     @Column(columnDefinition = "TEXT")
     private String description;
 
