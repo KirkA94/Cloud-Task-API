@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("api/tasks")
 public class TaskController {
 
