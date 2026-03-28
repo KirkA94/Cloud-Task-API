@@ -31,7 +31,7 @@ public class Task {
 
     // Optional longer text
     @NotBlank(message = "Description is required")
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String description;
 
     // Defaults to false if not set

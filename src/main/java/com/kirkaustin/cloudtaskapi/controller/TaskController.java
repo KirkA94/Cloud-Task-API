@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+
+
 
 import java.util.List;
 
@@ -26,9 +29,18 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getAll() {
-        return service.getAllTasks();
+public Page<Task> getAll(
+        @RequestParam(required = false) Boolean completed,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size,
+        @RequestParam(defaultValue = "createdAt") String sortBy,
+        @RequestParam(defaultValue = "desc") String direction
+) {
+    if (completed != null) {
+        return service.getTasksByCompletedPaginated(completed, page, size, sortBy, direction);
     }
+    return service.getTasksPaginated(page, size, sortBy, direction);
+}
 
     @GetMapping("/{id}")
     public Task getOne(@PathVariable Long id) {
