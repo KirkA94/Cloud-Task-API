@@ -59,6 +59,21 @@ export default function App() {
     }
   };
 
+  const handleToggleComplete = async (task) => {
+    try {
+      await axios.put(`${API_URL}/${task.id}`, {
+        title: task.title,
+        description: task.description,
+        completed: !task.completed,
+      });
+
+      fetchTasks();
+    } catch (err) {
+      console.error(err);
+      setError("Failed to update task.");
+    }
+  };
+
   return (
     <div className="app">
       <h1>Cloud Task Manager By Kirk Austin</h1>
@@ -94,7 +109,13 @@ export default function App() {
               <p>
                 <strong>Completed:</strong> {task.completed ? "Yes" : "No"}
               </p>
-              <button onClick={() => handleDelete(task.id)}>Complete</button>
+              <div className="task-actions">
+                <button onClick={() => handleToggleComplete(task)}>
+                  {task.completed ? "Mark Incomplete" : "Complete"}
+                </button>
+                <button onClick={() => handleDelete(task.id)}>Delete</button>
+              </div>
+
             </div>
           ))
         )}
