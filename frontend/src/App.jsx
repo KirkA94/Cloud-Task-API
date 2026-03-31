@@ -5,6 +5,7 @@ import "./index.css";
 const API_URL = "http://localhost:8080/api/tasks";
 
 export default function App() {
+  const [filter, setFilter] = useState("all");
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
@@ -15,7 +16,16 @@ export default function App() {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(API_URL);
+  
+      let url = API_URL;
+  
+      if (filter === "completed") {
+        url += "?completed=true";
+      } else if (filter === "incomplete") {
+        url += "?completed=false";
+      }
+  
+      const response = await axios.get(url);
       setTasks(response.data.content || []);
       setError("");
     } catch (err) {
@@ -28,7 +38,7 @@ export default function App() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [filter]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,6 +146,12 @@ export default function App() {
 
       {loading && <p>Loading tasks...</p>}
       {error && <p className="error">{error}</p>}
+
+      <div className="filters">
+  <button onClick={() => setFilter("all")}>All</button>
+  <button onClick={() => setFilter("completed")}>Completed</button>
+  <button onClick={() => setFilter("incomplete")}>Incomplete</button>
+</div>
 
       <div className="task-list">
         {tasks.length === 0 ? (
