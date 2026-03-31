@@ -5,6 +5,7 @@ import "./index.css";
 const API_URL = "http://localhost:8080/api/tasks";
 
 export default function App() {
+  const [editingTaskId, setEditingTaskId] = useState(null);
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -32,20 +33,36 @@ export default function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!title.trim() || !description.trim()) {
+      setError("Title and description are required.");
+      return;
+    }
+
     try {
-      await axios.post(API_URL, {
-        title,
-        description,
-        completed: false,
-      });
+      if (editingTaskId) {
+        const existingTask = tasks.find((task) => task.id === editingTaskId);
+
+        await axios.put(`${API_URL}/${editingTaskId}`, {
+          title,
+          description,
+          completed: existingTask ? existingTask.completed : false,
+        });
+      } else {
+        await axios.post(API_URL, {
+          title,
+          description,
+          completed: false,
+        });
+      }
 
       setTitle("");
       setDescription("");
+      setEditingTaskId(null);
       setError("");
       fetchTasks();
     } catch (err) {
       console.error(err);
-      setError("Failed to create task. Make sure all fields are filled in.");
+      setError("Failed to save task.");
     }
   };
 
@@ -74,6 +91,20 @@ export default function App() {
     }
   };
 
+  const handleEdit = (task) => {
+    setTitle(task.title);
+    setDescription(task.description);
+    setEditingTaskId(task.id);
+    setError("");
+  };
+
+  const handleCancelEdit = () => {
+    setTitle("");
+    setDescription("");
+    setEditingTaskId(null);
+    setError("");
+  };
+
   return (
     <div className="app">
       <h1>Cloud Task Manager By Kirk Austin</h1>
@@ -92,7 +123,15 @@ export default function App() {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <button type="submit">Add Task</button>
+        <button type="submit">
+          {editingTaskId ? "Update Task" : "Add Task"}
+        </button>
+
+        {editingTaskId && (
+  <button type="button" onClick={handleCancelEdit}>
+    Cancel Edit
+  </button>
+)}
       </form>
 
       {loading && <p>Loading tasks...</p>}
@@ -110,6 +149,7 @@ export default function App() {
                 <strong>Completed:</strong> {task.completed ? "Yes" : "No"}
               </p>
               <div className="task-actions">
+                <button onClick={() => handleEdit(task)}>Edit</button>
                 <button onClick={() => handleToggleComplete(task)}>
                   {task.completed ? "Mark Incomplete" : "Complete"}
                 </button>

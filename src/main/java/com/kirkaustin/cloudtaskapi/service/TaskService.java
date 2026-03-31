@@ -24,7 +24,6 @@ public class TaskService {
 
     //create a task
     public Task createTask(Task task) {
-        task.setCreatedAt(LocalDateTime.now());
         return repository.save(task);
     }
 

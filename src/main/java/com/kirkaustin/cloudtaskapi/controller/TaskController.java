@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("api/tasks")
+@RequestMapping("/api/tasks")
 public class TaskController {
 
     private final TaskService service;
@@ -53,9 +53,11 @@ public Task update(@PathVariable Long id, @Valid @RequestBody Task task) {
     return service.updateTask(id, task);
 }
 
+// Deletes a task by ID and returns a 204 No Content response
 @DeleteMapping("/{id}")
-public void delete(@PathVariable Long id) {
+public ResponseEntity<Void> delete(@PathVariable Long id) {
     service.deleteTask(id);
+    return ResponseEntity.noContent().build();
 }
 
 }

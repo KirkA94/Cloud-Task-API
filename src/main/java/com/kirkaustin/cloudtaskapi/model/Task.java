@@ -40,4 +40,10 @@ public class Task {
 
     // When the task was created
     private LocalDateTime createdAt;
+
+    // Automatically set createdAt before saving to the database
+    @PrePersist
+protected void onCreate() {
+    createdAt = LocalDateTime.now();
+}
 }
