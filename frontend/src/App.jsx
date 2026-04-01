@@ -10,21 +10,22 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("MEDIUM");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const fetchTasks = async () => {
     try {
       setLoading(true);
-  
+
       let url = API_URL;
-  
+
       if (filter === "completed") {
         url += "?completed=true";
       } else if (filter === "incomplete") {
         url += "?completed=false";
       }
-  
+
       const response = await axios.get(url);
       setTasks(response.data.content || []);
       setError("");
@@ -56,17 +57,20 @@ export default function App() {
           title,
           description,
           completed: existingTask ? existingTask.completed : false,
+          priority,
         });
       } else {
         await axios.post(API_URL, {
           title,
           description,
           completed: false,
+          priority,
         });
       }
 
       setTitle("");
       setDescription("");
+      setPriority("MEDIUM");
       setEditingTaskId(null);
       setError("");
       fetchTasks();
@@ -92,6 +96,7 @@ export default function App() {
         title: task.title,
         description: task.description,
         completed: !task.completed,
+        priority: task.priority,
       });
 
       fetchTasks();
@@ -104,6 +109,7 @@ export default function App() {
   const handleEdit = (task) => {
     setTitle(task.title);
     setDescription(task.description);
+    setPriority(task.priority || "MEDIUM");
     setEditingTaskId(task.id);
     setError("");
   };
@@ -111,6 +117,7 @@ export default function App() {
   const handleCancelEdit = () => {
     setTitle("");
     setDescription("");
+    setPriority("MEDIUM");
     setEditingTaskId(null);
     setError("");
   };
@@ -133,25 +140,31 @@ export default function App() {
           onChange={(e) => setDescription(e.target.value)}
         />
 
+        <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+        </select>
+
         <button type="submit">
           {editingTaskId ? "Update Task" : "Add Task"}
         </button>
 
         {editingTaskId && (
-  <button type="button" onClick={handleCancelEdit}>
-    Cancel Edit
-  </button>
-)}
+          <button type="button" onClick={handleCancelEdit}>
+            Cancel Edit
+          </button>
+        )}
       </form>
 
       {loading && <p>Loading tasks...</p>}
       {error && <p className="error">{error}</p>}
 
       <div className="filters">
-  <button onClick={() => setFilter("all")}>All</button>
-  <button onClick={() => setFilter("completed")}>Completed</button>
-  <button onClick={() => setFilter("incomplete")}>Incomplete</button>
-</div>
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("completed")}>Completed</button>
+        <button onClick={() => setFilter("incomplete")}>Incomplete</button>
+      </div>
 
       <div className="task-list">
         {tasks.length === 0 ? (
@@ -162,8 +175,12 @@ export default function App() {
               <h3>{task.title}</h3>
               <p>{task.description}</p>
               <p>
+                <strong>Priority:</strong> {task.priority}
+              </p>
+              <p>
                 <strong>Completed:</strong> {task.completed ? "Yes" : "No"}
               </p>
+
               <div className="task-actions">
                 <button onClick={() => handleEdit(task)}>Edit</button>
                 <button onClick={() => handleToggleComplete(task)}>
@@ -171,7 +188,6 @@ export default function App() {
                 </button>
                 <button onClick={() => handleDelete(task.id)}>Delete</button>
               </div>
-
             </div>
           ))
         )}

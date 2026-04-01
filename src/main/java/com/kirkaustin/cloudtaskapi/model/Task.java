@@ -41,9 +41,18 @@ public class Task {
     // When the task was created
     private LocalDateTime createdAt;
 
-    // Automatically set createdAt before saving to the database
+    // Automatically set createdAt and default priority before saving to the database
     @PrePersist
-protected void onCreate() {
-    createdAt = LocalDateTime.now();
-}
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    
+        if (priority == null) {
+            priority = Priority.MEDIUM;
+        }
+    }
+
+// Priority field stored as a string in the database
+@Enumerated(EnumType.STRING)
+@Column(nullable = false)
+private Priority priority;
 }
