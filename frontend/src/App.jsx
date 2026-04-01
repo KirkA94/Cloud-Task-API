@@ -122,6 +122,18 @@ export default function App() {
     setError("");
   };
 
+  const getPriorityClass = (priority) => {
+    switch (priority) {
+      case "HIGH":
+        return "priority-high";
+      case "MEDIUM":
+        return "priority-medium";
+      case "LOW":
+        return "priority-low";
+      default:
+        return "";
+    }
+  };
   return (
     <div className="app">
       <h1>Cloud Task Manager By Kirk Austin</h1>
@@ -161,32 +173,56 @@ export default function App() {
       {error && <p className="error">{error}</p>}
 
       <div className="filters">
-        <button onClick={() => setFilter("all")}>All</button>
-        <button onClick={() => setFilter("completed")}>Completed</button>
-        <button onClick={() => setFilter("incomplete")}>Incomplete</button>
+        <button
+          className={filter === "all" ? "filter-btn active-filter" : "filter-btn"}
+          onClick={() => setFilter("all")}
+        >
+          All
+        </button>
+        <button
+          className={filter === "completed" ? "filter-btn active-filter" : "filter-btn"}
+          onClick={() => setFilter("completed")}
+        >
+          Completed
+        </button>
+        <button
+          className={filter === "incomplete" ? "filter-btn active-filter" : "filter-btn"}
+          onClick={() => setFilter("incomplete")}
+        >
+          Incomplete
+        </button>
       </div>
 
       <div className="task-list">
         {tasks.length === 0 ? (
-          <p>No tasks yet.</p>
+          <div className="empty-state">
+          <p>No tasks yet. Add your first task above.</p>
+        </div>
         ) : (
           tasks.map((task) => (
             <div key={task.id} className="task-card">
               <h3>{task.title}</h3>
               <p>{task.description}</p>
               <p>
-                <strong>Priority:</strong> {task.priority}
+                <strong>Priority:</strong>{" "}
+                <span className={`priority-badge ${getPriorityClass(task.priority)}`}>
+                  {task.priority}
+                </span>
               </p>
               <p>
                 <strong>Completed:</strong> {task.completed ? "Yes" : "No"}
               </p>
 
               <div className="task-actions">
-                <button onClick={() => handleEdit(task)}>Edit</button>
-                <button onClick={() => handleToggleComplete(task)}>
+                <button className="edit-btn" onClick={() => handleEdit(task)}>
+                  Edit
+                </button>
+                <button className="complete-btn" onClick={() => handleToggleComplete(task)}>
                   {task.completed ? "Mark Incomplete" : "Complete"}
                 </button>
-                <button onClick={() => handleDelete(task.id)}>Delete</button>
+                <button className="delete-btn" onClick={() => handleDelete(task.id)}>
+                  Delete
+                </button>
               </div>
             </div>
           ))
