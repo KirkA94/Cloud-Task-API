@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 @RestController
 @CrossOrigin(origins = {
     "http://localhost:5173",
-    "https://your-app-name.vercel.app"
+    "https://cloudtaskapi.vercel.app"
 })
 @RequestMapping("/api/tasks")
 public class TaskController {
