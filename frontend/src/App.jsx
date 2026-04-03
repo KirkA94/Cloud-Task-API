@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./index.css";
 
-const API_URL = "http://localhost:8080/api/tasks";
+const API_URL = "https://cloud-task-api-1.onrender.com/api/tasks";
 
 export default function App() {
   const [filter, setFilter] = useState("all");

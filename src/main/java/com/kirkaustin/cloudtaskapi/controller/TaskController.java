@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 
-
-
-import java.util.List;
-
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "https://your-app-name.vercel.app"
+})
 @RequestMapping("/api/tasks")
 public class TaskController {
 
