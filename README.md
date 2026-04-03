@@ -1,41 +1,79 @@
-# Cloud Task API
+# Cloud Task Manager
 
-## Overview
-Cloud Task API is a backend application built using Spring Boot that allows users to manage tasks through RESTful APIs. This project focuses on backend architecture, database integration, and API design.
+A full-stack task management application that allows users to create, update, delete, and filter tasks. Built using React, Spring Boot, and PostgreSQL, and deployed to the cloud.
 
-## Tech Stack
+## 🚀 Live Demo
+Frontend: https://cloudtaskapi.vercel.app  
+Backend API: https://cloud-task-api-1.onrender.com/api/tasks
+
+---
+
+## 🧠 Features
+
+- Create, update, and delete tasks
+- Mark tasks as completed/incomplete
+- Filter tasks (All, Completed, Incomplete)
+- Pagination support
+- RESTful API design
+- Responsive UI
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- React (Vite)
+- Axios
+- CSS
+
+### Backend
 - Java
 - Spring Boot
-- PostgreSQL
-- Maven
-- REST APIs
+- Spring Data JPA
+- Hibernate
 
-## Features
-- Create, update, and delete tasks
-- RESTful API endpoints for task management
-- Integration with PostgreSQL database
-- Structured backend architecture
+### Database
+- PostgreSQL (Render)
 
-## What I Learned
-- Building backend systems using Spring Boot
-- Designing and implementing RESTful APIs
-- Connecting applications to PostgreSQL databases
-- Debugging database connection and authentication issues
-- Structuring scalable backend applications
+### Deployment
+- Frontend: Vercel
+- Backend: Render
 
-## Challenges
-- Resolving database authentication errors
-- Configuring PostgreSQL locally
-- Managing environment variables for database connections
+---
 
-## How to Run
-1. Clone the repository  
-2. Set up PostgreSQL and create a database  
-3. Configure application properties with your database credentials  
-4. Run the Spring Boot application  
-5. Test endpoints using Postman  
+## ⚙️ Architecture
 
-## Future Improvements
-- Add authentication (JWT)
-- Deploy to cloud platform
-- Build frontend interface
+Frontend (React) → REST API (Spring Boot) → PostgreSQL Database
+
+---
+
+## 🔥 Key Learnings
+
+- Built RESTful APIs with Spring Boot
+- Integrated PostgreSQL using JPA/Hibernate
+- Deployed backend and frontend to cloud platforms
+- Handled CORS issues and environment variables
+- Debugged real-world production errors
+
+---
+
+## 📸 Screenshots
+
+(Add your screenshot here)
+
+---
+
+## 📌 Future Improvements
+
+- Authentication (JWT login system)
+- User-specific tasks
+- Due dates & reminders
+- Drag-and-drop UI
+
+---
+
+## 👨‍💻 Author
+
+Kirk Austin  
+GitHub: https://github.com/KirkA94  
+LinkedIn: https://linkedin.com/in/kirk-a-austin
